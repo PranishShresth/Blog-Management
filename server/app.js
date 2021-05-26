@@ -24,5 +24,9 @@ const adminRouter = require("./routes/admin");
 app.use("/api", publicRouter);
 app.use("/api/admin", adminRouter);
 
+// listening
+
+app.listen(process.env.PORT || 5000);
+
 // Database connection
 dbConnect();
