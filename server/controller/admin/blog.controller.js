@@ -4,7 +4,7 @@ module.exports = {
   async postBlog(req, res) {
     try {
       const author = req.user;
-      const blogExist = Blog.find({ title: req.body.title });
+      const blogExist = await Blog.findOne({ title: req.body.title });
       if (blogExist) {
         return res
           .status(400)
