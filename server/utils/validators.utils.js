@@ -23,4 +23,11 @@ const validateSignUp = [
     .normalizeEmail(),
 ];
 
-module.exports = { validateSignUp };
+const validateSignin = [
+  check("email")
+    .isEmail()
+    .withMessage("The valid email is required")
+    .normalizeEmail(),
+];
+
+module.exports = { validateSignUp, validateSignin };

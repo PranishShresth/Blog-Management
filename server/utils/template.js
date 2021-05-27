@@ -446,3 +446,5 @@ function template(username, link) {
       </html>
       `;
 }
+
+module.exports = template;

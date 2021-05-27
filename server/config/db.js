@@ -4,9 +4,9 @@ const { MONGO_URI } = require("./keys");
 async function dbConnect() {
   try {
     mongoose.connect(MONGO_URI, {
+      useUnifiedTopology: true,
       useCreateIndex: true,
       useNewUrlParser: true,
-      useUnifiedTopology: true,
     });
   } catch {
     process.exit(1);

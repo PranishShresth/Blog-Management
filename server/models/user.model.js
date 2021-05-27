@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    isEmailVerfied: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
@@ -38,15 +38,14 @@ const userSchema = mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
-
 userSchema.pre("save", async function (next) {
   const user = this;
-  const saltRounds = bcrypt.genSalt(10);
   if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, saltRounds);
+    const saltRounds = await bcrypt.genSalt(10);
+    let hashpassword = await bcrypt.hash(user.password, saltRounds);
+    user.password = hashpassword;
+    next();
   }
-  next();
 });
 
 /**
@@ -59,5 +58,7 @@ userSchema.methods.comparePassword = async function (password) {
   const isSame = await bcrypt.compare(password, user.password);
   return isSame;
 };
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

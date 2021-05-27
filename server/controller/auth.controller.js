@@ -27,6 +27,7 @@ module.exports = {
         user: user.username,
         email: user.email,
         role: user.role,
+        isVerified: user.isVerified,
       };
       const token = createAccessToken(payload);
       sendEmailVerification(req.body.email, req.body.username, token);
@@ -39,10 +40,29 @@ module.exports = {
   },
   async login(req, res) {
     try {
-      const user = await User.findOne({ email: req.body.email });
-      if (userExists) {
-        const isMatch = await user.comparePassword(req.body.password);
+      const errors = await validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array() });
       }
-    } catch (err) {}
+      const user = await User.findOne({ email: req.body.email });
+      if (user) {
+        const isMatch = await user.comparePassword(req.body.password);
+        if (isMatch) {
+          const payload = {
+            user: user.username,
+            email: user.email,
+            role: user.role,
+            isVerified: user.isVerified,
+          };
+          const token = createAccessToken(payload);
+          return res.status(200).json({ user: payload, token });
+        }
+        return res.status(401).json({ msg: "Invalid credentials" });
+      }
+      return res.status(401).json({ msg: "Invalid credentials" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ msg: "Internal Server Error" });
+    }
   },
 };
