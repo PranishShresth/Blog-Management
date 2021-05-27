@@ -26,6 +26,8 @@ module.exports = {
 
       const payload = {
         user: user.username,
+        id: user._id,
+
         email: user.email,
         role: user.role,
         isVerified: user.isVerified,
@@ -50,6 +52,7 @@ module.exports = {
         const isMatch = await user.comparePassword(req.body.password);
         if (isMatch) {
           const payload = {
+            id: user._id,
             user: user.username,
             email: user.email,
             role: user.role,

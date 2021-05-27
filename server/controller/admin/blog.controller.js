@@ -3,6 +3,7 @@ const Blog = require("../../models/blog.model");
 module.exports = {
   async postBlog(req, res) {
     try {
+      const author = req.user;
       const blogExist = Blog.find({ title: req.body.title });
       if (blogExist) {
         return res
@@ -10,7 +11,7 @@ module.exports = {
           .json({ msg: "Blog with the title already exists" });
       }
 
-      const newBlog = new Blog({ ...req.body });
+      const newBlog = new Blog({ ...req.body, author: author.id });
       await newBlog.save();
       return res.status(201).json(newBlog);
     } catch (err) {
@@ -29,6 +30,25 @@ module.exports = {
 
   async updateBlog(req, res) {
     try {
-    } catch (err) {}
+      const { blogId } = req.params;
+      const blog = await Blog.findOneAndUpdate(
+        { _id: blogId },
+        { $set: { ...req.body } },
+        { $new: true }
+      );
+      return res.status(200).json(blog);
+    } catch (err) {
+      res.status(500).json({ msg: "Internal Server Error" });
+    }
+  },
+
+  async deleteBlog(req, res) {
+    try {
+      const { blogId } = req.params;
+      await Blog.findByIdAndDelete(blogId);
+      return res.status(200).json({ msg: "Blog deleted" });
+    } catch (err) {
+      res.status(500).json({ msg: "Internal Server Error" });
+    }
   },
 };
