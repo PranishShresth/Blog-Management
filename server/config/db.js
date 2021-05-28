@@ -3,11 +3,13 @@ const { MONGO_URI } = require("./keys");
 
 async function dbConnect() {
   try {
-    mongoose.connect(MONGO_URI, {
+    await mongoose.connect(MONGO_URI, {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useNewUrlParser: true,
     });
+
+    console.log("DB connected");
   } catch {
     process.exit(1);
   }
