@@ -18,7 +18,7 @@ module.exports = {
   async paginatedBlogs(req, res) {
     try {
       const { per_page, page, sort } = req.query;
-      const sortOrder = sort === "DESC" ? -1 : 1;
+      const sortOrder = sort === "DESC" ? -1 : sort === "ASC" ? 1 : 1;
       const totalBlogs = await Blog.find({
         isPublished: true,
       }).countDocuments();
