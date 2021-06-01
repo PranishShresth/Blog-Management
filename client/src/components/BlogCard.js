@@ -3,7 +3,7 @@ import {
   Card,
   CardActions,
   CardMedia,
-  Chip,
+  Link,
   CardContent,
   Typography,
   makeStyles,
@@ -26,7 +26,9 @@ function BlogCard(props) {
       ></CardMedia>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          {blogTitle}
+          <Link href={`/blog/${blogId}`} color="inherit">
+            {blogTitle}
+          </Link>
         </Typography>
         <Typography paragraph>{blogCategory}</Typography>
       </CardContent>

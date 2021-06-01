@@ -2,7 +2,8 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { BlogProvider } from "./context/BlogContext/BlogContext";
-const Landing = lazy(() => import("./pages/Landing/Landing"));
+const Landing = lazy(() => import("./pages/Landing"));
+const Blog = lazy(() => import("./pages/Blog"));
 function App() {
   return (
     <Router>
@@ -10,6 +11,7 @@ function App() {
         <BlogProvider>
           <Switch>
             <Route exact path="/" component={Landing} />
+            <Route exact path="/blog/:blogId" component={Blog} />
           </Switch>
         </BlogProvider>
       </Suspense>
