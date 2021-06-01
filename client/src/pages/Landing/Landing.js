@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import BlogCard from "../../components/BlogCard";
+import { fetchBlogsSuccess, blogError } from "../../actions/actions";
+import { BlogContext } from "../../context/BlogContext/BlogContext";
 import { Grid, Container } from "@material-ui/core";
+import axios from "../../utils/axios";
 
 function Landing() {
+  const { blogState, blogDispatch } = useContext(BlogContext);
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const blogs = await axios.get("/api/blogs");
+        blogDispatch(fetchBlogsSuccess(blogs.data));
+      } catch (err) {
+        blogDispatch(blogError(err));
+      }
+    }
+    fetchBlogs();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <Header />
