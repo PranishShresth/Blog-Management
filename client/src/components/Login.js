@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, makeStyles } from "@material-ui/core";
 import axios from "../utils/axios";
 import { useSnackbar } from "notistack";
+import { UserContext } from "../context/UserContext/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Login() {
   const classes = useStyles();
+  const { userDispatch } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
   const [loginValues, setLoginValues] = useState({ email: "", password: "" });
   const handleChange = (ev) => {
@@ -26,6 +28,9 @@ function Login() {
     try {
       const { data, status } = await axios.post("/api/auth/login", loginValues);
       if (status === 200) {
+        localStorage.setItem("token", data.accessToken);
+        // userDispatch()
+        enqueueSnackbar("Login Success", { variant: "success" });
       }
     } catch (err) {
       enqueueSnackbar("Login Error", { variant: "error" });
