@@ -14,7 +14,7 @@ module.exports = {
       // check if the user exist
       const userExists = await User.findOne({ email: req.body.email });
       if (userExists) {
-        return res.status(403).json({ msg: "User already Exits" });
+        return res.status(401).json({ msg: "User already Exits" });
       }
       const newUser = new User({
         username: req.body.username,
@@ -34,7 +34,7 @@ module.exports = {
       sendEmailVerification(req.body.email, req.body.username, token);
       //   email logic
 
-      return res.status(200).json({ user: payload, token });
+      return res.status(201).json({ user: payload, token });
     } catch (err) {
       return res.status(500).json({ msg: "Internal Server Error" });
     }

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, makeStyles } from "@material-ui/core";
-
+import axios from "../utils/axios";
+import { useSnackbar } from "notistack";
+import { UserContext } from "../context/UserContext/UserContext";
+import { registerUserSuccess } from "../actions/actions";
 const useStyles = makeStyles((theme) => ({
   form: {
     "&>div": {
@@ -15,7 +18,9 @@ function Register() {
     repeatPassword: "",
     email: "",
   });
-
+  const [error, setError] = useState(null);
+  const { userDispatch } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const handleChange = (ev) => {
     setRegisterValues((prevState) => ({
@@ -24,8 +29,26 @@ function Register() {
     }));
   };
 
-  const handleRegister = (ev) => {
+  const handleRegister = async (ev) => {
     ev.preventDefault();
+    if (registerValue.password !== registerValue.repeatPassword) {
+      return enqueueSnackbar("Password doesn't match", { variant: "error" });
+    }
+    try {
+      const { data, status } = await axios.post(
+        "/api/auth/register",
+        registerValue
+      );
+
+      if (status === 201) {
+        localStorage.setItem("token", data.token);
+        userDispatch(registerUserSuccess(data.user));
+
+        return enqueueSnackbar("Register Success", { variant: "success" });
+      }
+    } catch (err) {
+      enqueueSnackbar("Register Failed", { variant: "error" });
+    }
   };
   return (
     <div>
@@ -67,7 +90,7 @@ function Register() {
           fullWidth
           onChange={handleChange}
         />
-        <Button variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary">
           Register
         </Button>
       </form>

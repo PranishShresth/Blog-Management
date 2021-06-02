@@ -3,12 +3,12 @@ import {
   Card,
   CardActions,
   CardMedia,
-  Link,
   CardContent,
   Typography,
   makeStyles,
 } from "@material-ui/core";
 
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: { maxWidth: "100%" },
   media: {
@@ -26,9 +26,7 @@ function BlogCard(props) {
       ></CardMedia>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          <Link href={`/blog/${blogId}`} color="inherit">
-            {blogTitle}
-          </Link>
+          <Link to={`/blog/${blogId}`}>{blogTitle}</Link>
         </Typography>
         <Typography paragraph>{blogCategory}</Typography>
       </CardContent>
