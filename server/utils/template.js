@@ -1,4 +1,6 @@
-function template(username, link) {
+const config = require("../config/keys");
+
+function template(username, token) {
   return `<!DOCTYPE html>
       <html>
         <head>
@@ -390,7 +392,7 @@ function template(username, link) {
                                           <tr>
                                             <td>
                                               <a
-                                                href='http://localhost:5000/api/verify/${link}'
+                                                href='${config.FRONTEND_URL}/verify/${token}'
                                                 target="_blank"
                                                 >Verify the account</a
                                               >

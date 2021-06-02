@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === "production") {
     JWT_SECRET: process.env.JWT_SECRET,
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASS: process.env.EMAIL_PASS,
+    FRONTEND_URL: process.env.FRONTEND_PROD_URL,
   };
 } else {
   module.exports = {
@@ -15,5 +16,6 @@ if (process.env.NODE_ENV === "production") {
     JWT_SECRET: process.env.JWT_SECRET,
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASS: process.env.EMAIL_PASS,
+    FRONTEND_URL: process.env.FRONTEND_DEV_URL,
   };
 }

@@ -68,6 +68,8 @@ module.exports = {
     }
   },
 
+  async verifyUser(req, res) {},
+
   fetchUser(req, res) {
     try {
       const user = req.user;
