@@ -67,4 +67,13 @@ module.exports = {
       return res.status(500).json({ msg: "Internal Server Error" });
     }
   },
+
+  fetchUser(req, res) {
+    try {
+      const user = req.user;
+      res.status(200).json({ user });
+    } catch (err) {
+      return res.status(500).json({ msg: "Internal Server Error" });
+    }
+  },
 };

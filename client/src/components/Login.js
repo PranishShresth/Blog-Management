@@ -3,6 +3,7 @@ import { TextField, Button, makeStyles } from "@material-ui/core";
 import axios from "../utils/axios";
 import { useSnackbar } from "notistack";
 import { UserContext } from "../context/UserContext/UserContext";
+import { loginUserSuccess } from "../actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -28,10 +29,12 @@ function Login() {
     try {
       const { data, status } = await axios.post("/api/auth/login", loginValues);
       if (status === 200) {
-        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("token", data.token);
+        userDispatch(loginUserSuccess(data.user));
         // userDispatch()
-        enqueueSnackbar("Login Success", { variant: "success" });
+        return enqueueSnackbar("Login Success", { variant: "success" });
       }
+      enqueueSnackbar("Login Error", { variant: "error" });
     } catch (err) {
       enqueueSnackbar("Login Error", { variant: "error" });
     }
@@ -51,14 +54,14 @@ function Login() {
         />
         <TextField
           required
-          id="email"
+          id="password"
           type="password"
           label="Password"
           fullWidth
           value={loginValues.password}
           onChange={handleChange}
         />
-        <Button variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary">
           Login
         </Button>
       </form>

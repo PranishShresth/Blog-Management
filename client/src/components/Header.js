@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,6 +11,7 @@ import {
 import Modal from "./Modal";
 import Login from "./Login";
 import Register from "./Register";
+import { UserContext } from "../context/UserContext/UserContext";
 
 const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
