@@ -7,6 +7,7 @@ import {
   LOGOUT_USER,
   REGISTER_USER,
   USER_ERROR,
+  UPDATE_USER,
 } from "../reducer/constants";
 
 export const fetchBlogsSuccess = (blogs) => ({
@@ -43,4 +44,9 @@ export const userError = (error) => ({
 
 export const logOutSuccess = () => ({
   type: LOGOUT_USER,
+});
+
+export const updateUserSuccess = (newUser) => ({
+  type: UPDATE_USER,
+  payload: newUser,
 });

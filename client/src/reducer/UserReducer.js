@@ -4,6 +4,7 @@ import {
   FETCH_USER,
   REGISTER_USER,
   USER_ERROR,
+  UPDATE_USER,
 } from "./constants";
 const initialState = {
   user: null,
@@ -23,6 +24,11 @@ function UserReducer(state, action) {
       return {
         ...state,
         authenticated: true,
+        user: action.payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
         user: action.payload,
       };
     case LOGOUT_USER:

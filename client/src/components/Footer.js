@@ -7,8 +7,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "60px 0",
     width: "100%",
     background: "#d7d7d8",
-    position: "fixed",
-    bottom: 0,
   },
 }));
 function Footer() {
