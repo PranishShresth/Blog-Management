@@ -84,7 +84,16 @@ module.exports = {
           },
           { $new: true }
         );
-        res.status(200).json(userToVerify);
+
+        const payload = {
+          id: userToVerify._id,
+          user: userToVerify.username,
+          email: userToVerify.email,
+          role: userToVerify.role,
+          isVerified: userToVerify.isVerified,
+        };
+
+        res.status(200).json({ user: payload });
       });
     } catch (err) {
       return res.status(500).json({ msg: "Internal Server Error" });
