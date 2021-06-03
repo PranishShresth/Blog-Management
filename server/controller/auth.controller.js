@@ -77,6 +77,9 @@ module.exports = {
         if (err) {
           return res.status(400).json({ msg: "Token not valid" });
         }
+        if (user.isVerified) {
+          return res.status(200).json({ msg: "User already verified" });
+        }
         const userToVerify = await User.findByIdAndUpdate(
           user.id,
           {
@@ -92,8 +95,9 @@ module.exports = {
           role: userToVerify.role,
           isVerified: userToVerify.isVerified,
         };
+        const token = createAccessToken(payload);
 
-        res.status(200).json({ user: payload });
+        res.status(200).json({ user: payload, token });
       });
     } catch (err) {
       return res.status(500).json({ msg: "Internal Server Error" });
