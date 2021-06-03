@@ -2,6 +2,8 @@ const User = require("../models/user.model");
 const { createAccessToken } = require("./../utils/auth.utils");
 const sendEmailVerification = require("./../utils/email.util");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const config = require("../config/keys");
 
 module.exports = {
   async register(req, res) {
@@ -68,7 +70,26 @@ module.exports = {
     }
   },
 
-  async verifyUser(req, res) {},
+  async verifyUser(req, res) {
+    try {
+      const { token } = req.body;
+      jwt.verify(token, config.JWT_SECRET, async (err, user) => {
+        if (err) {
+          return res.status(400).json({ msg: "Token not valid" });
+        }
+        const userToVerify = await User.findByIdAndUpdate(
+          user.id,
+          {
+            $set: { isVerified: true },
+          },
+          { $new: true }
+        );
+        res.status(200).json(userToVerify);
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: "Internal Server Error" });
+    }
+  },
 
   fetchUser(req, res) {
     try {

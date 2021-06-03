@@ -8,6 +8,7 @@ const auth = require("../config/middleware/auth");
 router.get("/auth/fetchUser", auth, authController.fetchUser);
 router.post("/auth/register", validateSignUp, authController.register);
 router.post("/auth/login", validateSignin, authController.login);
+router.get("/auth/verify", authController.verifyUser);
 // blogs
 
 router.get("/blogs", blogController.paginatedBlogs);
