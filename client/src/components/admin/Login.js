@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Grid, TextField, Paper, Button } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  Paper,
+  Button,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import AdminBg from "./images/admin.jpg";
 
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
@@ -9,44 +17,44 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
     width: "100%",
+    height: "100%",
     background: "linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);",
   },
-  gridContainer: {
-    width: "60%",
-    height: "90%",
-    background: "white",
-    [theme.breakpoints.down("sm")]: {
-      width: "90%",
-    },
+  container: {
+    display: "flex",
+    height: "500px",
   },
-  button: {
-    borderRadius: 9999,
-    padding: 14,
+  imageContainer: {
+    flex: "0 0 50%",
+    background: `url(${AdminBg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+    width: "100%",
+  },
+  formContainer: {
+    flex: "0 0 50%",
+    background: "white",
+
+    [theme.breakpoints.down("sm")]: {
+      flex: "0 0 100%",
+    },
   },
   form: {
-    width: "60%",
-
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    margin: "10rem auto",
-    [theme.breakpoints.down("xs")]: {
-      margin: "1rem auto",
-    },
-    "& > *": {
-      margin: theme.spacing(2),
-    },
-  },
-  gridItems: {
+    margin: "0 80px",
     height: "100%",
-    "&:first-of-type": {
-      backgroundSize: "cover",
-      backgroundPosition: "center center",
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
+    "& > *": {
+      margin: "10px 0",
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "0 20px",
     },
   },
 }));
@@ -63,9 +71,9 @@ function Login() {
   const handleLogin = () => {};
   return (
     <div className={classes.registrationContainer}>
-      <Grid container className={classes.gridContainer}>
-        <Grid item md={5} xs={1} className={classes.gridItems}></Grid>
-        <Grid item md={7} xs={12} className={classes.gridItems}>
+      <Container maxWidth="lg" className={classes.container}>
+        <div className={classes.imageContainer}></div>
+        <div className={classes.formContainer}>
           <form
             className={classes.form}
             noValidate
@@ -74,9 +82,16 @@ function Login() {
           >
             <LockOpenIcon
               fontSize="large"
-              style={{ background: "red", borderRadius: "50%", color: "white" }}
+              style={{
+                background: "red",
+                borderRadius: "50%",
+                color: "white",
+                textAlign: "center",
+              }}
             />
-            <h2>Sign in</h2>
+            <Typography align="center" variant="h4">
+              Admin Sign in
+            </Typography>
             <TextField
               id="email"
               label="Email"
@@ -104,10 +119,9 @@ function Login() {
             >
               Login
             </Button>
-            <Link to="/admin/register">Don't have an account? Sign Up</Link>
           </form>
-        </Grid>
-      </Grid>
+        </div>
+      </Container>
     </div>
   );
 }
