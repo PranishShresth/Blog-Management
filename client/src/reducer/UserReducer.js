@@ -9,6 +9,7 @@ import {
 const initialState = {
   user: null,
   authenticated: false,
+
   error: null,
 };
 function UserReducer(state, action) {

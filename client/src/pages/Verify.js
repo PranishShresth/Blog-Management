@@ -16,10 +16,13 @@ function Verify() {
   const { userState, userDispatch } = useContext(UserContext);
 
   useEffect(() => {
+    if (!userState.user) {
+      return history.push("/");
+    }
     if (userState.user.isVerified) {
       history.push("/");
     }
-  }, [userState.user.isVerified, history]);
+  }, [history]);
 
   const handleVerify = async () => {
     try {
