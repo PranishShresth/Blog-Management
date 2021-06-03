@@ -48,7 +48,12 @@ module.exports = {
         return res.status(400).json({ error: errors.array() });
       }
       const user = await User.findOne({ email: req.body.email });
+
       if (user) {
+        // check if the user is admin
+        if (user.role !== "admin") {
+          return res.status(400).json({ msg: "User not authorized" });
+        }
         const isMatch = await user.comparePassword(req.body.password);
         if (isMatch) {
           const payload = {
