@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Grid,
   TextField,
@@ -10,6 +11,9 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import AdminBg from "./images/admin.jpg";
+import axios from "../../utils/axios";
+import { UserContext } from "../../context/UserContext/UserContext";
+import { loginUserSuccess } from "../../actions/actions";
 
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
+  const history = useHistory();
+  const { userState, userDispatch } = useContext(UserContext);
   const [user, setUser] = useState({ email: "", password: "" });
   const handleChange = (ev) => {
     setUser((prevState) => ({
@@ -71,7 +77,23 @@ function Login() {
       [ev.target.id]: ev.target.value,
     }));
   };
-  const handleLogin = () => {};
+  const handleLogin = async (ev) => {
+    ev.preventDefault();
+    if (ev.keyCode === 13) {
+      return;
+    }
+
+    try {
+      const { data, status } = await axios.post("/api/admin/auth/login", user);
+      if (status === 200) {
+        userDispatch(loginUserSuccess(data.user));
+        localStorage.setItem("token", data.token);
+        history.push("/admin/addPost");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className={classes.registrationContainer}>
       <Container maxWidth="lg" className={classes.container}>
