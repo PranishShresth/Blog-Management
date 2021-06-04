@@ -9,7 +9,7 @@ import {
 const initialState = {
   user: null,
   authenticated: false,
-
+  isAdmin: false,
   error: null,
 };
 function UserReducer(state, action) {
@@ -20,17 +20,20 @@ function UserReducer(state, action) {
         ...state,
         authenticated: true,
         user: action.payload,
+        isAdmin: action.payload.role === "admin",
       };
     case REGISTER_USER:
       return {
         ...state,
         authenticated: true,
         user: action.payload,
+        isAdmin: action.payload.role === "admin",
       };
     case UPDATE_USER:
       return {
         ...state,
         user: action.payload,
+        isAdmin: action.payload.role === "admin",
       };
     case LOGOUT_USER:
     case USER_ERROR:
@@ -38,6 +41,7 @@ function UserReducer(state, action) {
       return {
         ...state,
         authenticated: false,
+
         user: null,
       };
     default:

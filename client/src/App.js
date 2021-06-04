@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { BlogProvider } from "./context/BlogContext/BlogContext";
 import { UserProvider } from "./context/UserContext/UserContext";
+import AdminRoute from "./utils/routes/AdminRoute";
 
 const Landing = lazy(() => import("./pages/Landing"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -19,7 +20,11 @@ function App() {
               <Route exact path="/" component={Landing} />
               <Route exact path="/blog/:blogId" component={Blog} />
               <Route exact path="/verify/:token" component={Verify} />
-              <Route exact path="/admin/addPost" component={Post}></Route>
+              <AdminRoute
+                exact
+                path="/admin/addPost"
+                component={Post}
+              ></AdminRoute>
               <Route exact path="/admin/login" component={AdminLogin}></Route>
 
               <Route render={() => <h1>Not found</h1>} />
