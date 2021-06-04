@@ -5,6 +5,7 @@ function AdminRoute({ component: Component, ...rest }) {
   const {
     userState: { authenticated, isAdmin },
   } = useContext(UserContext);
+
   return authenticated && isAdmin ? (
     <Route
       {...rest}

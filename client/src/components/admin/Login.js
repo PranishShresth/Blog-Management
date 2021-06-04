@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Grid,
@@ -77,6 +77,11 @@ function Login() {
       [ev.target.id]: ev.target.value,
     }));
   };
+  useEffect(() => {
+    if (userState.isAdmin) {
+      history.push("/admin/addPost");
+    }
+  }, [history, userState.isAdmin]);
   const handleLogin = async (ev) => {
     ev.preventDefault();
     if (ev.keyCode === 13) {
