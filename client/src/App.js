@@ -10,6 +10,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const Verify = lazy(() => import("./pages/Verify"));
 const Post = lazy(() => import("./components/admin/PostBlog"));
 const AdminLogin = lazy(() => import("./components/admin/Login"));
+const AdminPost = lazy(() => import("./pages/admin/Post"));
 function App() {
   return (
     <Router>
@@ -24,9 +25,13 @@ function App() {
                 exact
                 path="/admin/addPost"
                 component={Post}
+              ></AdminRoute>{" "}
+              <AdminRoute
+                exact
+                path="/admin/post"
+                component={AdminPost}
               ></AdminRoute>
               <Route exact path="/admin/login" component={AdminLogin}></Route>
-
               <Route render={() => <h1>Not found</h1>} />
             </Switch>
           </BlogProvider>

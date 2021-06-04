@@ -5,7 +5,7 @@ export const postBlogSuccess = (blog) => ({
   payload: blog,
 });
 
-export const getAllBlogs = (blogs) => ({
+export const getAllBlogsSuccess = (blogs) => ({
   type: GET_ALL_BLOGS,
   payload: blogs,
 });
