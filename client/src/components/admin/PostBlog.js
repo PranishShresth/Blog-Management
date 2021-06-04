@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import {
   TextField,
@@ -14,7 +14,10 @@ import {
 } from "@material-ui/core";
 import "react-quill/dist/quill.snow.css";
 import { quillFormats, quillModules } from "./quillConfig";
+import { postBlogSuccess } from "../../actions/admin/actions";
+import { BlogContext } from "../../context/BlogContext/BlogContext";
 import AdminLayout from "./AdminLayout";
+import axios from "../../utils/axios";
 const useStyles = makeStyles((theme) => ({
   form: {
     height: "100%",
@@ -40,16 +43,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 function PostBlog() {
   const classes = useStyles();
-
+  const { blogState, blogDispatch } = useContext(BlogContext);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("");
   const [category, setCategory] = useState("");
 
+  const handlePostBlog = async (ev) => {
+    ev.preventDefault();
+    if (ev.keyCode === 13) {
+      return;
+    }
+    try {
+      const { data, status } = await axios.post("/api/admin/blog", {
+        title,
+        tags,
+        content,
+        category,
+      });
+      if (status === 201) {
+        blogDispatch(postBlogSuccess(data.blog));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <AdminLayout>
-      <form className={classes.form} id="postForm">
+      <form className={classes.form} id="postForm" onSubmit={handlePostBlog}>
         <div className={classes.heading}>
           <h2>Posts</h2>
           <Button

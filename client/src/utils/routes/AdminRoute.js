@@ -6,6 +6,9 @@ function AdminRoute({ component: Component, ...rest }) {
     userState: { authenticated, isAdmin },
   } = useContext(UserContext);
 
+  if (!(authenticated && isAdmin)) {
+    return "Loading...";
+  }
   return authenticated && isAdmin ? (
     <Route
       {...rest}

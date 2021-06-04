@@ -13,7 +13,7 @@ module.exports = {
 
       const newBlog = new Blog({ ...req.body, author: author.id });
       await newBlog.save();
-      return res.status(201).json(newBlog);
+      return res.status(201).json({ blog: newBlog });
     } catch (err) {
       res.status(500).json({ msg: "Internal Server Error" });
     }

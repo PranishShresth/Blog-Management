@@ -8,3 +8,8 @@ export const UPDATE_USER = "UPDATE_USER";
 export const BLOGS_LOADED = "BLOGS_LOADED";
 export const BLOG_LOADED = "BLOG_LOADED";
 export const BLOG_ERROR = "BLOG_ERROR";
+
+export const POST_BLOG = "POST_BLOG";
+export const UPDATE_BLOG = "UPDATE_BLOG";
+export const DELETE_BLOG = "DELETE_BLOGS";
+export const GET_ALL_BLOGS = "GET_ALL_BLOGS";

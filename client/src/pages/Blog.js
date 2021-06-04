@@ -26,7 +26,13 @@ function Blog() {
     <>
       <Header />
       <Container maxWidth="lg" style={{ marginTop: 100 }}>
-        {blogState.blog?.content}
+        <div className="blogContainer">
+          <div
+            dangerouslySetInnerHTML={{ __html: blogState.blog?.content }}
+          ></div>
+        </div>
+
+        {}
       </Container>
       <Footer />
     </>
