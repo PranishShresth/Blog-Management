@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { UserContext } from "../../context/UserContext/UserContext";
-function AdminRoute({ component: Component, ...rest }) {
+function AdminRoute({ component: Component, location, ...rest }) {
   const {
-    userState: { authenticated, isAdmin },
+    userState: { authenticated, isAdmin, loading },
   } = useContext(UserContext);
 
-  if (!(authenticated && isAdmin)) {
+  if (loading) {
     return "Loading...";
   }
+
   return authenticated && isAdmin ? (
     <Route
       {...rest}
@@ -18,7 +19,14 @@ function AdminRoute({ component: Component, ...rest }) {
       }}
     />
   ) : (
-    <Redirect to="/" />
+    <Redirect
+      to={{
+        pathname: "/",
+        state: {
+          from: location,
+        },
+      }}
+    />
   );
 }
 

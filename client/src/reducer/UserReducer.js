@@ -10,6 +10,7 @@ const initialState = {
   user: null,
   authenticated: false,
   isAdmin: false,
+  loading: true,
   error: null,
 };
 function UserReducer(state, action) {
@@ -20,12 +21,14 @@ function UserReducer(state, action) {
         ...state,
         authenticated: true,
         user: action.payload,
+        loading: false,
         isAdmin: action.payload.role === "admin",
       };
     case REGISTER_USER:
       return {
         ...state,
         authenticated: true,
+        loading: false,
         user: action.payload,
         isAdmin: action.payload.role === "admin",
       };
@@ -33,6 +36,7 @@ function UserReducer(state, action) {
       return {
         ...state,
         user: action.payload,
+        loading: false,
         isAdmin: action.payload.role === "admin",
       };
     case LOGOUT_USER:
