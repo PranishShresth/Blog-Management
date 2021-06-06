@@ -3,7 +3,7 @@ import { Container, makeStyles, Grid, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    height: 80,
+    height: "auto",
     padding: "60px 0",
     width: "100%",
     background: "#d7d7d8",

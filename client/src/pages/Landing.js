@@ -6,22 +6,28 @@ import { fetchBlogsSuccess, blogError } from "../actions/actions";
 import { BlogContext } from "../context/BlogContext/BlogContext";
 import { Grid, Container } from "@material-ui/core";
 import axios from "../utils/axios";
+import { Pagination } from "@material-ui/lab";
 
 function Landing() {
   const { blogState, blogDispatch } = useContext(BlogContext);
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        const blogs = await axios.get("/api/blogs");
-        blogDispatch(fetchBlogsSuccess(blogs.data));
-      } catch (err) {
-        blogDispatch(blogError(err));
-      }
+  async function fetchBlogs(page, per_page) {
+    try {
+      const blogs = await axios.get(
+        `/api/blogs?page=${page}&per_page=${per_page}&sort=DESC`
+      );
+      blogDispatch(fetchBlogsSuccess(blogs.data));
+    } catch (err) {
+      blogDispatch(blogError(err));
     }
-
-    fetchBlogs();
+  }
+  useEffect(() => {
+    fetchBlogs(1, 3);
     // eslint-disable-next-line
   }, []);
+
+  const handlePagination = (ev, page) => {
+    fetchBlogs(page, 3);
+  };
 
   return (
     <>
@@ -57,6 +63,13 @@ function Landing() {
             );
           })}
         </Grid>
+        <div style={{ padding: "30px 0" }}>
+          <Pagination
+            count={Math.ceil(blogState.blogs?.totalBlogs / 3)}
+            color="primary"
+            onChange={handlePagination}
+          ></Pagination>
+        </div>
       </Container>
       <Footer />
     </>
