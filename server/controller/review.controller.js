@@ -1,7 +1,7 @@
 const Review = require("../models/reviews.model");
 
 module.exports = {
-  postReview(req, res) {
+  async postReview(req, res) {
     try {
       const { content, blog } = req.body;
       if (!content) {
@@ -9,6 +9,18 @@ module.exports = {
       }
       const review = new Review({ blog, author: req.user._id, content });
       await review.save();
-    } catch (err) {}
+    } catch (err) {
+      return res.status(500).json({ msg: "Internal Server Error" });
+    }
+  },
+
+  async getReviews(req, res) {
+    try {
+      const { blogId } = req.params;
+      const review = Review.find({ blog: blogId });
+      return res.staus(200).json({ review });
+    } catch (err) {
+      return res.status(500).json({ msg: "Internal Server Error" });
+    }
   },
 };

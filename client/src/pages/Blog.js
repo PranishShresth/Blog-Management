@@ -1,13 +1,16 @@
 import React, { useEffect, useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Container } from "@material-ui/core";
+import { Container, TextField, Button } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { fetchBlogSuccess, blogError } from "../actions/actions";
 import { BlogContext } from "../context/BlogContext/BlogContext";
+import { UserContext } from "../context/UserContext/UserContext";
+
 import axios from "../utils/axios";
 
 function Blog() {
+  const { userState, userDispatch } = useContext(UserContext);
   const { blogState, blogDispatch } = useContext(BlogContext);
   const params = useParams();
 
@@ -27,6 +30,10 @@ function Blog() {
     };
   }, [blogDispatch, params.blogId]);
 
+  const handleReviewSubmit = async (ev) => {
+    try {
+    } catch (err) {}
+  };
   return (
     <div className="blog">
       <Header />
@@ -38,7 +45,26 @@ function Blog() {
           ></div>
         </div>
 
-        {}
+        {userState.authenticated && (
+          <form onSubmit={handleReviewSubmit}>
+            <TextField
+              id="review"
+              label="Review"
+              multiline
+              rows={4}
+              fullWidth
+              variant="outlined"
+              gutterBottom
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ margin: "30px 0" }}
+            >
+              Add Review
+            </Button>
+          </form>
+        )}
       </Container>
       <Footer />
     </div>
