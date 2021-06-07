@@ -7,9 +7,14 @@ import {
   LOGOUT_USER,
   REGISTER_USER,
   USER_ERROR,
+  GET_REVIEWS,
   UPDATE_USER,
 } from "../reducer/constants";
 
+export const getReviewsSuccess = (reviews) => ({
+  type: GET_REVIEWS,
+  payload: reviews,
+});
 export const fetchBlogsSuccess = (blogs) => ({
   type: BLOGS_LOADED,
   payload: blogs,

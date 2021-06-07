@@ -16,6 +16,6 @@ router.get("/blogs", blogController.paginatedBlogs);
 router.get("/blog/:blogId", blogController.getSpecificBlog);
 
 // review
-router.post("/blog/review", reviewController.postReview);
+router.post("/blog/review", auth, reviewController.postReview);
 router.get("/blog/:blogId/review", reviewController.getReviews);
 module.exports = router;

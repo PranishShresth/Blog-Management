@@ -4,12 +4,15 @@ module.exports = {
   async postReview(req, res) {
     try {
       const { content, blog } = req.body;
+
       if (!content) {
         return res.status(400).json({ msg: "No content Provided" });
       }
-      const review = new Review({ blog, author: req.user._id, content });
-      await review.save();
+      const review = new Review({ blog, author: req.user.id, content });
+      const newReview = await review.save();
+      return res.status(200).json({ review: newReview });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: "Internal Server Error" });
     }
   },
@@ -17,9 +20,10 @@ module.exports = {
   async getReviews(req, res) {
     try {
       const { blogId } = req.params;
-      const review = Review.find({ blog: blogId });
-      return res.staus(200).json({ review });
+      const reviews = await Review.find({ blog: blogId });
+      return res.status(200).json({ reviews });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: "Internal Server Error" });
     }
   },
