@@ -13,7 +13,7 @@ import {
 const initialState = {
   blogs: [],
   blog: {},
-  reviews: [],
+  reviews: null,
   loading: true,
   error: null,
 };

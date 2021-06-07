@@ -23,6 +23,7 @@ module.exports = {
         isPublished: true,
       }).countDocuments();
       const blogs = await Blog.find({ isPublished: true }, { content: 0 })
+        .populate("author", { username: 1 })
         .limit(Number(per_page) || 5)
         .skip(Number(page - 1) * Number(per_page))
         .sort({ createdAt: sortOrder })

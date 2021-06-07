@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Container, TextField, Button } from "@material-ui/core";
+import { Container, TextField, Button, Grid } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import {
   fetchBlogSuccess,
@@ -10,7 +10,7 @@ import {
 } from "../actions/actions";
 import { BlogContext } from "../context/BlogContext/BlogContext";
 import { UserContext } from "../context/UserContext/UserContext";
-
+import ReviewCard from "../components/ReviewCard";
 import axios from "../utils/axios";
 
 function Blog() {
@@ -59,7 +59,7 @@ function Blog() {
   return (
     <div className="blog">
       <Header />
-      <Container maxWidth="lg" style={{ marginTop: 100 }}>
+      <Container maxWidth="lg" style={{ margin: "100px 0" }}>
         {blogState.loading && <div>Loading...</div>}
         <div className="blogContainer">
           <div
@@ -89,6 +89,22 @@ function Blog() {
             </Button>
           </form>
         )}
+
+        <h1>Reviews</h1>
+
+        <Grid container spacing={3}>
+          {blogState.reviews?.reviews?.map((review) => {
+            return (
+              <Grid item key={review._id} md={12} lg={12} xs={12}>
+                <ReviewCard
+                  content={review.content}
+                  author={review.author.username}
+                  createdAt={review.createdAt}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Container>
       <Footer />
     </div>

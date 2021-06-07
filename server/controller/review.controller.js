@@ -20,10 +20,11 @@ module.exports = {
   async getReviews(req, res) {
     try {
       const { blogId } = req.params;
-      const reviews = await Review.find({ blog: blogId });
+      const reviews = await Review.find({ blog: blogId })
+        .populate("author", { username: 1 })
+        .exec();
       return res.status(200).json({ reviews });
     } catch (err) {
-      console.log(err);
       return res.status(500).json({ msg: "Internal Server Error" });
     }
   },
