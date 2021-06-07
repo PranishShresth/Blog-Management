@@ -10,6 +10,26 @@ import axios from "../../utils/axios";
 
 function Post() {
   const { blogState, blogDispatch } = useContext(BlogContext);
+
+  const handleDelete = async (blogId) => {
+    try {
+      const { data, status } = await axios.delete(`/api/admin/blog/${blogId}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleUpdate = async (blogId, payload) => {
+    try {
+      const { data, status } = await axios.put(
+        `/api/admin/blog/${blogId}`,
+        payload
+      );
+      blogDispatch({ type: "BLOG_UPDATE", payload: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const columns = [
     {
       label: "Blog Title",
@@ -30,39 +50,39 @@ function Post() {
       name: "Published",
       options: {
         filter: true,
-        // customBodyRenderLite: (dataIndex) => {
-        //   //   const isPublished = blogs[dataIndex].isPublished;
-        //   if (isPublished) {
-        //     return (
-        //       <Button
-        //         variant="contained"
-        //         color="secondary"
-        //         style={{ background: "#d32f2f" }}
-        //         onClick={() => {
-        //           //   handlePublish(blogs[dataIndex]._id, {
-        //           //     isPublished: !isPublished,
-        //           //   });
-        //         }}
-        //       >
-        //         Unpublish
-        //       </Button>
-        //     );
-        //   }
-        //   return (
-        //     <Button
-        //       variant="contained"
-        //       color="primary"
-        //       style={{ background: "#689f38" }}
-        //       onClick={() => {
-        //         // handlePublish(blogs[dataIndex]._id, {
-        //         //   isPublished: !isPublished,
-        //         // });
-        //       }}
-        //     >
-        //       Publish
-        //     </Button>
-        //   );
-        // },
+        customBodyRenderLite: (dataIndex) => {
+          const isPublished = blogState.blogs[dataIndex].isPublished;
+          if (isPublished) {
+            return (
+              <Button
+                variant="contained"
+                color="secondary"
+                style={{ background: "#d32f2f" }}
+                onClick={() => {
+                  handleUpdate(blogState.blogs[dataIndex]._id, {
+                    isPublished: !isPublished,
+                  });
+                }}
+              >
+                Unpublish
+              </Button>
+            );
+          }
+          return (
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ background: "#689f38" }}
+              onClick={() => {
+                handleUpdate(blogState.blogs[dataIndex]._id, {
+                  isPublished: !isPublished,
+                });
+              }}
+            >
+              Publish
+            </Button>
+          );
+        },
       },
     },
     {
@@ -92,7 +112,7 @@ function Post() {
             <>
               <IconButton
                 onClick={() => {
-                  //   handleClickOpen(courses[dataIndex]);
+                  handleDelete(blogState.blogs[dataIndex]._id);
                 }}
               >
                 <DeleteForever />

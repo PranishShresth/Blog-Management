@@ -5,6 +5,7 @@ import {
   POST_BLOG,
   UPDATE_BLOG,
   DELETE_BLOG,
+  BLOG_UPDATE,
   BLOG_UNLOADED,
   GET_ALL_BLOGS,
 } from "./constants";
@@ -25,6 +26,14 @@ function BlogReducer(state, action) {
       return { ...state, blog: action.payload, loading: false };
     case BLOG_UNLOADED:
       return { ...state, blog: null, loading: true };
+    case BLOG_UPDATE:
+      console.log(action.payload._id);
+      const idx = state.blogs.findIndex(
+        (blog) => blog._id === action.payload._id
+      );
+      const updatedState = [...state.blogs];
+      updatedState[idx] = action.payload;
+      return { ...state, blog: null, loading: false, blogs: updatedState };
     case BLOG_ERROR:
       return { ...state, error: action.payload };
     default:

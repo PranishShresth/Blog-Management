@@ -16,7 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import { Link } from "react-router-dom";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -68,14 +68,28 @@ function AdminLayout(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Dashboard", "Posts", "AddPost", "Users"].map((text, index) => (
-          <ListItem button key={text}>
+        <Link
+          to="/admin/addPost"
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={"Add Post"} />
           </ListItem>
-        ))}
+        </Link>
+        <Link
+          to="/admin/post"
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Post"} />
+          </ListItem>
+        </Link>
       </List>
       <Divider />
     </div>
