@@ -10,7 +10,6 @@ import {
   MenuItem,
   Select,
   InputLabel,
-  Chip,
 } from "@material-ui/core";
 import "react-quill/dist/quill.snow.css";
 import { quillFormats, quillModules } from "./quillConfig";
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function PostBlog() {
   const classes = useStyles();
-  const { blogState, blogDispatch } = useContext(BlogContext);
+  const { blogDispatch } = useContext(BlogContext);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState([]);

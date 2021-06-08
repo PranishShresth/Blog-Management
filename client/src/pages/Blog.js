@@ -7,7 +7,9 @@ import {
   fetchBlogSuccess,
   blogError,
   getReviewsSuccess,
+  postReviewSuccess,
 } from "../actions/actions";
+import { useSnackbar } from "notistack";
 import { BlogContext } from "../context/BlogContext/BlogContext";
 import { UserContext } from "../context/UserContext/UserContext";
 import ReviewCard from "../components/ReviewCard";
@@ -18,6 +20,7 @@ function Blog() {
   const { blogState, blogDispatch } = useContext(BlogContext);
   const [review, setReview] = useState("");
   const params = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     async function getBlogById() {
@@ -48,10 +51,12 @@ function Blog() {
   const handleReviewSubmit = async (ev) => {
     try {
       ev.preventDefault();
-      const { data } = axios.post("/api/blog/review", {
+      const { data } = await axios.post("/api/blog/review", {
         content: review,
         blog: params.blogId,
       });
+      enqueueSnackbar("Review added", { variant: "success" });
+      blogDispatch(postReviewSuccess(data.review));
     } catch (err) {
       console.log(err);
     }

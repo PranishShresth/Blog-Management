@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Grid, Container, Button } from "@material-ui/core";
+import { Container, Button } from "@material-ui/core";
 import { UserContext } from "../context/UserContext/UserContext";
 import { updateUserSuccess } from "../actions/actions";
 import { useSnackbar } from "notistack";
@@ -26,7 +26,7 @@ function Verify() {
 
   const handleVerify = async () => {
     try {
-      const { data, status } = await axios.post("/api/auth/verify", {
+      const { data } = await axios.post("/api/auth/verify", {
         token: params.token,
       });
       localStorage.setItem("token", data.token);

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { makeStyles, Button, IconButton } from "@material-ui/core";
+import React, { useEffect, useContext } from "react";
+import { Button, IconButton } from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
 import { Edit, Visibility, DeleteForever } from "@material-ui/icons";
 
@@ -7,23 +7,22 @@ import { getAllBlogsSuccess } from "../../actions/admin/actions";
 import { BlogContext } from "../../context/BlogContext/BlogContext";
 import AdminLayout from "../../components/admin/AdminLayout";
 import axios from "../../utils/axios";
+import { useSnackbar } from "notistack";
 
 function Post() {
   const { blogState, blogDispatch } = useContext(BlogContext);
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleDelete = async (blogId) => {
     try {
-      const { data, status } = await axios.delete(`/api/admin/blog/${blogId}`);
+      await axios.delete(`/api/admin/blog/${blogId}`);
+      enqueueSnackbar("Blog deleted", { variant: "warning" });
     } catch (err) {
       console.log(err);
     }
   };
   const handleUpdate = async (blogId, payload) => {
     try {
-      const { data, status } = await axios.put(
-        `/api/admin/blog/${blogId}`,
-        payload
-      );
+      const { data } = await axios.put(`/api/admin/blog/${blogId}`, payload);
       blogDispatch({ type: "BLOG_UPDATE", payload: data });
     } catch (err) {
       console.log(err);
@@ -143,7 +142,7 @@ function Post() {
   useEffect(() => {
     async function getAllBlogs() {
       try {
-        const { data, status } = await axios.get("/api/admin/blog");
+        const { data } = await axios.get("/api/admin/blog");
 
         blogDispatch(getAllBlogsSuccess(data.blogs));
       } catch (err) {}

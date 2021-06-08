@@ -15,3 +15,4 @@ export const UPDATE_BLOG = "UPDATE_BLOG";
 export const DELETE_BLOG = "DELETE_BLOGS";
 export const GET_ALL_BLOGS = "GET_ALL_BLOGS";
 export const GET_REVIEWS = "GET_REVIEWS";
+export const POST_REVIEW = "POST_REVIEW";

@@ -9,11 +9,17 @@ import {
   USER_ERROR,
   GET_REVIEWS,
   UPDATE_USER,
+  POST_REVIEW,
 } from "../reducer/constants";
 
 export const getReviewsSuccess = (reviews) => ({
   type: GET_REVIEWS,
   payload: reviews,
+});
+
+export const postReviewSuccess = (review) => ({
+  type: POST_REVIEW,
+  payload: review,
 });
 export const fetchBlogsSuccess = (blogs) => ({
   type: BLOGS_LOADED,

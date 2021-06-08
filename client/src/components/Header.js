@@ -4,7 +4,6 @@ import {
   Toolbar,
   Typography,
   Button,
-  Link,
   Container,
   makeStyles,
 } from "@material-ui/core";
@@ -29,7 +28,6 @@ function Header() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { userState, userDispatch } = useContext(UserContext);
-  console.log(userState);
   return (
     <div>
       <AppBar position="fixed" style={{ background: "#8ec06c" }}>

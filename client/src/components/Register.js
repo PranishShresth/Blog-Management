@@ -18,7 +18,6 @@ function Register() {
     repeatPassword: "",
     email: "",
   });
-  const [error, setError] = useState(null);
   const { userDispatch } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();

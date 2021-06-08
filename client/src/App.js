@@ -4,7 +4,6 @@ import { Suspense, lazy } from "react";
 import { BlogProvider } from "./context/BlogContext/BlogContext";
 import { UserProvider } from "./context/UserContext/UserContext";
 import AdminRoute from "./utils/routes/AdminRoute";
-import { CircularProgress } from "@material-ui/core";
 
 const Landing = lazy(() => import("./pages/Landing"));
 const Blog = lazy(() => import("./pages/Blog"));

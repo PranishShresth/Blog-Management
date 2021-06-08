@@ -10,6 +10,7 @@ module.exports = {
       }
       const review = new Review({ blog, author: req.user.id, content });
       const newReview = await review.save();
+
       return res.status(200).json({ review: newReview });
     } catch (err) {
       console.log(err);

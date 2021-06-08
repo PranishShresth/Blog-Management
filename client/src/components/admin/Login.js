@@ -1,13 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Grid,
-  TextField,
-  Paper,
-  Button,
-  Container,
-  Typography,
-} from "@material-ui/core";
+import { TextField, Button, Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import AdminBg from "./images/admin.jpg";
@@ -15,7 +8,6 @@ import axios from "../../utils/axios";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { loginUserSuccess } from "../../actions/actions";
 
-import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   registrationContainer: {
     display: "flex",

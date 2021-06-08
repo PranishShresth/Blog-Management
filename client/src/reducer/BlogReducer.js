@@ -3,8 +3,7 @@ import {
   BLOG_ERROR,
   BLOG_LOADED,
   POST_BLOG,
-  UPDATE_BLOG,
-  DELETE_BLOG,
+  POST_REVIEW,
   GET_REVIEWS,
   BLOG_UPDATE,
   BLOG_UNLOADED,
@@ -13,7 +12,7 @@ import {
 const initialState = {
   blogs: [],
   blog: {},
-  reviews: null,
+  reviews: [],
   loading: true,
   error: null,
 };
@@ -21,6 +20,12 @@ function BlogReducer(state, action) {
   switch (action.type) {
     case GET_REVIEWS:
       return { ...state, reviews: action.payload };
+    case POST_REVIEW:
+      console.log(state.reviews);
+      return {
+        ...state,
+        reviews: { reviews: [...state.reviews.reviews, action.payload] },
+      };
     case GET_ALL_BLOGS:
     case BLOGS_LOADED:
       return { ...state, blogs: action.payload, loading: false };

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Paper,
-  Typography,
-  CardActionArea,
-} from "@material-ui/core";
+import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 export default function ReviewCard({ content, author, createdAt }) {
   const fullDate = new Date(createdAt);
   const month = fullDate.getMonth();
